@@ -1,0 +1,44 @@
+---
+title: "Sean Sears Activity 1"
+author: "Sean Sears"
+date: '2019-09-18'
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Research Interest
+The focus of my research is on understanding the __perceived__ barriers to metropolitan freight congestion in Canada's major regions. Using qualitative methodologies, specifically a grounded theory emergent approach, interviews with 28 industry experts and government officials were analyzed to determine what the main barriers were perceived to be  __at the time__ of the interviews. The first paper of my sandwich thesis,  _Understanding the Perceived Barriers to Freight Congestion in Canada's Major Metropolitan Regions: A Grounded Theory Approach_ is in draft. The second paper,  _Understanding the Gaps Between Industry and Government Perceptions to the Barriers of Goods Movements in Canada’s Major Regions: A Dual Grounded Theory Approach_ much of the analysis is ready to be finished and prepared for visualization and discussion. The second paper uses a somewhat novel approach by employing two separate GTAs to develop separate emergent theories for the two groups assessed; the theories are then compared and contrasted to develop an understanding of where industry and government see eye-to-eye, and where there are discrepancies in perception.
+
+#Favourites
+##Favourite Music
+1. Never Again, Bahamas
+2. Stronger Than That, Bahamas
+3. All The Time, Bahamas
+4. Changing of the Seasons, Two Door Cinema Club
+5. Yellow, Coldplay
+
+## Favourite Equation
+$$ E=mc^2 $$
+
+##Favourite Artists
+
+Artist | Accomplishment  
+- | -
+Bahamas  | Canadian Music Award (CMA)  
+Coldplay | Grammy  
+San Cisco | None  
+Arkells | CMA
+Rex Orange County | None
+
+#A Chunk of Code
+The following chunk of code will plot the equation of a straight line wherein the Y-intercept is _-50_ with a gradient of _3_, for x-values of _-50_ through _50_.
+```{r This makes a plot}
+b <- -50
+x <- c(-50:50)
+m = 3
+plot(y=m*x+b, x=x)
+```
