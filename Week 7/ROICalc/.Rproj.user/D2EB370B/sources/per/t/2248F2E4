@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1572468637100.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1503003993",
+    "id" : "2248F2E4",
+    "lastKnownWriteTime" : 1572468034,
+    "last_content_update" : 1572468034,
+    "path" : "~/GitHub/My-First-Repository/ROICalc/man/ROICalc.Rd",
+    "project_path" : "man/ROICalc.Rd",
+    "properties" : {
+    },
+    "read_only" : true,
+    "read_only_alternatives" : [
+        "R/ROICalc.R"
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}
