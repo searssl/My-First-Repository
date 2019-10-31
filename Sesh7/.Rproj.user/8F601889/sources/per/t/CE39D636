@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1572452992619.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1867697615",
+    "id" : "CE39D636",
+    "lastKnownWriteTime" : 1548598729,
+    "last_content_update" : 1548598729,
+    "path" : "~/Desktop/Masters/Course Work/Geog 738/Exercise 1/01-Data-and-Stuff.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

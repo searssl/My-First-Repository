@@ -1,0 +1,24 @@
+"0","```r
+mc_mode_choice <- read_csv(\"Commute Mac.csv\")
+
+```"
+"1","Parsed with column specification:
+cols(
+  .default = col_integer(),
+  timecycle = col_double(),
+  timewalk = col_double(),
+  accesshsr = col_double(),
+  waitingtimehsr = col_double(),
+  timehsr = col_double(),
+  LAT = col_double(),
+  LONG = col_double(),
+  mhi = col_double(),
+  dwell_den = col_double(),
+  lum = col_double(),
+  st_den = col_double(),
+  inter_den = col_double(),
+  SF_P_ratio = col_double(),
+  side_den = col_double()
+)
+See spec(...) for full column specifications.
+"
