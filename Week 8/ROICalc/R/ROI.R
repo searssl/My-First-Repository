@@ -15,4 +15,4 @@ ROI <- function(IA, Fee, PT, PP, SP, ST){((((IA - (Fee*PT))/PP)*SP)-(Fee*ST))-IA
 
 #' @examples
 #' ROI(25000, 12.50, 1, 2.5, 3.75, 2)
-#' export
+#' @export

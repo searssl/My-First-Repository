@@ -5,14 +5,14 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "721475304",
+    "hash" : "2158659556",
     "id" : "2354D2E1",
-    "lastKnownWriteTime" : 1573061731,
-    "last_content_update" : 1573061731107,
+    "lastKnownWriteTime" : 1573062594,
+    "last_content_update" : 1573062594247,
     "path" : "~/Documents/GitHub/My-First-Repository/Week 7/ROICalc/R/ROI.R",
     "project_path" : "R/ROI.R",
     "properties" : {
-        "cursorPosition" : "4,13",
+        "cursorPosition" : "14,10",
         "scrollLine" : "0"
     },
     "relative_order" : 1,

@@ -12,6 +12,7 @@
 #' @param ST Sale Trades: The number of transactions required to sell the volume of stocks.
 #' @note This calculator assumes the broker allows for the purchase of fractional shares.
 #' @author Sean Sears
+#' @export
 
 ROI <- function(IA, Fee, PT, PP, SP, ST){
    ((((IA - (Fee*PT))/PP)*SP)-(Fee*ST))-IA
