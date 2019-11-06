@@ -1,0 +1,15 @@
+Package: ROICalc
+Type: Package
+Title: A Return on Investment Calculator for Stock Investments
+Version: 0.1.0
+Author: Sean Sears
+Maintainer: Sean Sears <searssl@mcmaster.ca>
+Description: Generates an ROI for user defined values.
+License: CC
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

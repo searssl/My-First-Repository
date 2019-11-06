@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1572468533079.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "468262074",
+    "id" : "5474CAC",
+    "lastKnownWriteTime" : 1572468541,
+    "last_content_update" : 1572468541967,
+    "path" : "~/GitHub/My-First-Repository/ROICalc/vignettes/ROICalc-vignette.Rmd",
+    "project_path" : "vignettes/ROICalc-vignette.Rmd",
+    "properties" : {
+        "cursorPosition" : "19,0",
+        "last_setup_crc32" : "",
+        "scrollLine" : "13"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

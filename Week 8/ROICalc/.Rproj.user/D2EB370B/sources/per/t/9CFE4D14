@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1572468631588.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1519992848",
+    "id" : "9CFE4D14",
+    "lastKnownWriteTime" : 1572465268,
+    "last_content_update" : 1572465268,
+    "path" : "~/GitHub/My-First-Repository/ROICalc/man/ROI.Rd",
+    "project_path" : "man/ROI.Rd",
+    "properties" : {
+    },
+    "read_only" : true,
+    "read_only_alternatives" : [
+        "R/ROI.R"
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}

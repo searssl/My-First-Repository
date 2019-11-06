@@ -1,0 +1,77 @@
+---
+title: "ROICalc-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ROICalc-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+# Load Packages
+library(ROICalc)
+library(magicfor)
+```
+
+
+```{r Dataset Examples}
+# Dataset Examples
+#
+# Identify the sale prices that will only return a positive investment.
+
+roi_calcs$SP[roi_calcs$Net >= 0]
+
+# Identify the sale prices that will only return an investment with a 5% or greater return.
+
+roi_calcs$SP[roi_calcs$Perc >= 0.05]
+
+```
+
+```{r}
+# Calculator Examples
+#
+# Calculate the nominal return on an initial investment of $5000, with a trading fee of $50. All of the shares will be purchased in 1 transaction.
+# The share purchase price is $55.67. The share sale price is $67.84. All of the shares will be sold in 1 transaction.
+ROICalc:::InvestmentCalculator(5000, 50, 1, 55.67, 67.84, 1)
+```
+
+```{r Return based on a Set Sale Price, for Varying Purchase Prices}
+# Calculator Examples
+#
+#Return based on a Set Sale Price, for Varying Purchase Prices
+magic_for(print, silent = TRUE) #This is for formatting.
+for (PP in seq(1, 3, by = 0.1)){ #The set of purchase values you wish to evaluate at what interval (whole dollars = 1, ten cents = 0.1, single cents = 0.01)
+IA <- 5000 # The initial investment
+Fee <- 1 # The trade fee
+PT <- 1 # The number of trade transactions to purchase the shares
+SP <- 2 # The price at which the shares will be sold.
+ST <- 1 # The number of trade transactions to sell the shares
+  Return  <- ROICalc:::InvestmentCalculator(IA, Fee, PT, PP, SP, ST)
+  print(Return)
+}
+magic_result_as_dataframe() #This is for formatting.
+```
+
+```{r Return based on a Set Purchase Price, for Varying Sale Prices}
+# Calculator Examples
+#
+#Return based on a Set Purchase Price, for Varying Sale Prices
+magic_for(print, silent = TRUE) #This is for formatting.
+for (SP in seq(1, 3, by = 0.1)){ #The set of purchase values you wish to evaluate at what interval (whole dollars = 1, ten cents = 0.1, single cents = 0.01)
+IA <- 5000 # The initial investment
+Fee <- 1 # The trade fee
+PT <- 1 # The number of trade transactions to purchase the shares
+PP <- 1 # The price at which the shares will be purchased
+ST <- 1 # The number of trade transactions to sell the shares
+  Return  <- ROICalc:::InvestmentCalculator(IA, Fee, PT, PP, SP, ST)
+  print(Return)
+}
+magic_result_as_dataframe() #This is for formatting.
+```

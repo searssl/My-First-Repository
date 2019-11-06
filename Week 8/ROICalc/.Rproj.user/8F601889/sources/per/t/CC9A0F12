@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573054811060.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3430092235",
+    "id" : "CC9A0F12",
+    "lastKnownWriteTime" : 1573061642,
+    "last_content_update" : 1573061642530,
+    "path" : "~/Desktop/Masters/Course Work/Geog 712/Week 8/ROICalc/R/InvestmentCalculator.R",
+    "project_path" : "R/InvestmentCalculator.R",
+    "properties" : {
+        "cursorPosition" : "21,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

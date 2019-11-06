@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573061719404.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "721475304",
+    "id" : "2354D2E1",
+    "lastKnownWriteTime" : 1573061731,
+    "last_content_update" : 1573061731107,
+    "path" : "~/Documents/GitHub/My-First-Repository/Week 7/ROICalc/R/ROI.R",
+    "project_path" : "R/ROI.R",
+    "properties" : {
+        "cursorPosition" : "4,13",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -28,10 +28,6 @@ Return on Investment Calculator
 \note{
 This calculator assumes the broker allows for the purchase of fractional shares.
 }
-\examples{
-ROICalc:::ROI(25000, 12.50, 1, 2.5, 3.75, 2)
-
-}
 \author{
 Sean Sears
 }
