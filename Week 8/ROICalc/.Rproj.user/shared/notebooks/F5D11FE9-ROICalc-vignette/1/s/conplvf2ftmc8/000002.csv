@@ -1,0 +1,10 @@
+"0","# Calculator Examples
+#
+# Calculate the nominal return on an initial investment of $5000, with a trading fee of $50. All of the shares will be purchased in 1 transaction.
+# The share purchase price is $55.67. The share sale price is $67.84. All of the shares will be sold in 1 transaction.
+ROICalc:::InvestmentCalculator(5000, 50, 1, 55.67, 67.84, 1)
+"
+"1","[1]"
+"1"," 982.1178"
+"1","
+"
