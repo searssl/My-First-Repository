@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573659195938.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3179804277",
+    "id" : "D593D6B2",
+    "lastKnownWriteTime" : 1573660145,
+    "last_content_update" : 1573660145006,
+    "path" : "~/Documents/GitHub/My-First-Repository/Week 8/ROICalc/R/InvestmentCalculator.R",
+    "project_path" : "R/InvestmentCalculator.R",
+    "properties" : {
+        "cursorPosition" : "12,3",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573659212687.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1502954855",
+    "id" : "864BA221",
+    "lastKnownWriteTime" : 1572531324,
+    "last_content_update" : 1572531324,
+    "path" : "~/Documents/GitHub/My-First-Repository/Week 8/ROICalc/R/roi_calcs.R",
+    "project_path" : "R/roi_calcs.R",
+    "properties" : {
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
