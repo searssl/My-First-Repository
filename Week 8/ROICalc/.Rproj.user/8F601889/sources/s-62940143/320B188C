@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573664228742.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2629719955",
+    "id" : "320B188C",
+    "lastKnownWriteTime" : 1573664398,
+    "last_content_update" : 1573664398,
+    "path" : "~/Documents/GitHub/My-First-Repository/Week 8/ROICalc/R/Random.seed.R",
+    "project_path" : "R/Random.seed.R",
+    "properties" : {
+        "cursorPosition" : "9,21",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

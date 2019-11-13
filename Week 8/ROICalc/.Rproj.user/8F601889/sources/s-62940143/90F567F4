@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3604217976",
+    "hash" : "0",
     "id" : "90F567F4",
-    "lastKnownWriteTime" : 1573661828,
-    "last_content_update" : 1573661828,
+    "lastKnownWriteTime" : 1573664176,
+    "last_content_update" : 1573664176,
     "path" : "~/Documents/GitHub/My-First-Repository/Week 8/ROICalc/NAMESPACE",
     "project_path" : "NAMESPACE",
     "properties" : {
+        "cursorPosition" : "0,0",
+        "scrollLine" : "0"
     },
     "relative_order" : 10,
     "source_on_save" : false,

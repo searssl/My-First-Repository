@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1502954855",
+    "hash" : "0",
     "id" : "864BA221",
     "lastKnownWriteTime" : 1572531324,
     "last_content_update" : 1572531324,
     "path" : "~/Documents/GitHub/My-First-Repository/Week 8/ROICalc/R/roi_calcs.R",
     "project_path" : "R/roi_calcs.R",
     "properties" : {
+        "cursorPosition" : "0,0",
+        "scrollLine" : "0"
     },
     "relative_order" : 10,
     "source_on_save" : false,
