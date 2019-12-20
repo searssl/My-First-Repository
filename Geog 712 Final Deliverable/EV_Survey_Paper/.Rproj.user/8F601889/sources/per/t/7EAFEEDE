@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576815631818.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "7EAFEEDE",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : 1576815631818,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "2B1D72AC",
+        "caption" : "VDS",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=VDS&cache_key=2B1D72AC",
+        "displayedObservations" : 16758,
+        "environment" : "",
+        "object" : "VDS",
+        "preview" : 0,
+        "totalObservations" : 16758,
+        "variables" : 136
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576815386663.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "191A25BD",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : 1576815386663,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "AB87E40A",
+        "caption" : "Proportion2",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Proportion2&cache_key=AB87E40A",
+        "displayedObservations" : "21",
+        "environment" : "",
+        "object" : "Proportion2",
+        "preview" : "0",
+        "totalObservations" : "21",
+        "variables" : "3"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

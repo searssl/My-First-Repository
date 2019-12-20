@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1576808954862.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "227|32|243|0|\n",
+    "hash" : "40442890",
+    "id" : "2EAA73BB",
+    "lastKnownWriteTime" : 1576817706,
+    "last_content_update" : 1576817706160,
+    "path" : "~/Desktop/EV_Survey_Paper/Survey_Results/Survey_Results.Rmd",
+    "project_path" : "Survey_Results/Survey_Results.Rmd",
+    "properties" : {
+        "cursorPosition" : "304,27",
+        "scrollLine" : "348"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

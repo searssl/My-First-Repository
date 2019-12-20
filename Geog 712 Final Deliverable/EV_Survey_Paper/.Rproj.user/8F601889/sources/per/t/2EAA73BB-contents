@@ -1,0 +1,391 @@
+---
+title: A Short Example - Canadian Behaviours for the Design of Electric Vehicle Powertrain Combinations
+author:
+  - name: Sean Sears
+    email: searssl@mcmaster.ca
+    affiliation: McMaster Institute for Transportation and Logistics
+    footnote: Corresponding Author
+address:
+  - code: McMaster Institute for Transportation and Logistics
+    address: McMaster Institute for Transportation and Logistics,  School of Geography and Earth Sciences, 1280 Main Street West, Hamilton, Ontario, L8S 4L8
+
+abstract: |
+  This paper is a very short demonstration of consumer attitudes towards EV powertrain and body type combinations in Canada. There is a focus on the impact of incentives and the modelling of purchase price, operating cost, incentive, and vehicle age importance in vehicle purchasing decisions. Additionally, powertrain combinations are compared against survey questions to provide a sense of whether underlying biases or concerns impact how consumers may design vehicles, even in realistic but hypothetical scenarios.
+
+date: "`r Sys.Date()`"
+bibliography: mybibfile.bib
+#linenumbers: true
+numbersections: true
+csl: elsevier-harvard.csl
+output: rticles::elsevier_article
+header-includes:
+   - \usepackage{float}
+   - \usepackage{graphicx}
+---
+
+```{r To-Do-List, eval=FALSE, include=FALSE}
+1. Built a package to house the data. Package builds and loads without issue
+2. Write a paper that demonstrates rrwf.
+  2.1 Use template - Using elsevier
+  2.2 Have a topic - Writing about Discrete choice analysis being applied to the 2018 mitl survey VDS.
+  2.3 Build tables and figures, reference in text to demonstrate citation functionality.
+  2.4 Run analysis in document, with results generating tables or figures to demonstrate reproducability
+  2.5 Course elements to include: Headers, Tables, Latex formatting, inline formatting, host file on GitHub, sharing of the data is restricted, package is created with the data, the dataset is well documented,
+```
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(evd)
+library(mlogit)
+library(kableExtra)
+library(knitr)
+library(VDS)
+library(MASS)
+```
+
+Introduction
+============
+
+The transportation sector represents one of the single largest contributors to greenhouse gas emissions (GHGs) and other pollutants in Canada. The  uptake of electric vehicles (EVs), to date, has been limited. Various authors have explored attitudes towards EVs and have generally found purchase cost, range anxiety, and battery maintainability to be the primary barriers to purchase (see @Mohamed2018). In this paper, as a part of the _McMaster Institute for Transportation and Logistic's_ study on _The Social Costs and Benefits of Electric Mobility in Canada_, we aim to understand how consumers would design and purchase a vehicle of their preferred body type (sub-compact, Luxury Sedan, SUV, etc.) at a realistic price point. This paper presents a small number of results from the survey itself in addition to some basic discrete choice modeling, looking at the impact of purchase, price, operating cost, incentives, and body types. First, we will review the data collection process and aspects of the collection instrument, then present the data analysis, followed by some of the survey results and how the vehilces designed compare, lastly some conclusions are drawn.
+
+Data Collection
+=================================
+
+Data was collected via an electronic survey completed by a third-party firm. A total of ~20,000 observations were collected, including repeat respondents from a version of the survey conducted in 2015. A total of 16,901 respondents are included in this analysis dataset after removing repeat respondents and other responses inline with other works that have used this dataset as their basis. While other works focus on the results of the full survey (reference, reference, mitl report), this analysis looks at the experimental section added for the 2018 iteration of the survey, referred to as the _Vehicle Design Scenarios_ (VDS). 
+
+```{r fig-VDS-Int, echo=FALSE, fig.align='center', fig.cap="\\label{fig:VDS-Int} Initalized Vehicle Design Scenario", out.width="100%"}
+include_graphics("figures/VDS_Init.png")
+```
+    
+Respondents were asked to go through two VDSs where they would choose a set of powertrain features (gasoline and electric range) that produce a vehicle, at a price, they would be willing to purchase. It is worth noting that as a part of the respondent screening process, only responses that had some degree of intention of purchasing a vehicle in the near future (as opposed to zero intent) were asked to complete the survey. In each of the two scenarios, respondents where given a number of assumptions to respond to, including: the ease or challenge they could charge their EVs (Charging stations being nearby, no wait time to plug in, and fast charging times - or not), a range of government cash incentives applied to the purchase price ($0, $7000, and $14000), and whether or not respondents would be able to readily charge their vehicles at home with minimal need for public charging otherwise. These assumptions could not be changed by the respondent. 
+
+Inside of the VDS respondents, were able to assess how the performance, maintainability, and charging outcomes of the vehicle designed would change as the age, gasoline range, and electric range values were changed to create different configurations. Additionally, respondents were given information on the tailpipe emissions, in respect to a standard internal combustion engine, information on the estimated cost to charge their vehicle (based on the capacity of existing battery technology and their specified annual kilometres driven), and how much they may, potentially save on gasoline. The final piece of information given is an approximation of the vehicle purchase price (based off of existing vehicles and black book values are used to estimate the value of used vehicle prices), after tax and incentives, which is also presented as lease and financing payments. The standard initialization of the VDS, Figure \ref{fig:VDS-Int}, begins with all sliders set to zero values. Respondents are able to adjust the age and range sliders as many times as they perceived necessary, but are required to move either the gasoline or electric range sliders at least once to complete a vehicle configuration and choose a payment method to proceed. Once a configuration has been selected, Figure \ref{fig:VDS-Sel}, the aforementioned fields are populated and adjust in real-time as the respondent alters their configuration. 
+
+```{r fig-VDS-Sel, echo=FALSE, fig.align='center', fig.cap="\\label{fig:VDS-Sel}Vehicle Design Scenario with Configuration", out.width="100%"}
+include_graphics("figures/VDS_Selected.png")
+```
+
+Data Analysis
+=============
+
+After cleaning the data of bad responses, as defined by too few slider changes (less than 1) in the VDS or completeing the VDS too fast or too slowly (+- 3 standard deviations of the mean), we analyze the 16, 758 remaining responses. As discussed above, respondents were asked about the type of vehicle they would be interested in purchasing in the future, in addition to their annual kilometerage. These values were used to influence the purchase price of the vehicle (which varys by the body type and the powertrain) and informed the operating cost calculation (which estimates the monthly cost to operate the vehicle based on how far the respondent drives), discussed in detail in Appendix 1.
+
+```{r Data Cleaning, include=FALSE, }
+
+#Load survey data from package into data frame.
+
+df <- VDS_Data
+
+# The focus of this work is on the design space exercise. Since the DS was presented near the end of the survey, there is concern that some respondents rushed through or did not adequately explore the tool. The effort here is to limit the number of those respondents from affecting the analysis.
+
+min(df$TIME1)
+mean(df$TIME1)
+max(df$TIME1)
+min(df$CHANGES1)
+df$CHANGES1 <- as.numeric(df$CHANGES1)
+mean(df$CHANGES1)
+max(df$CHANGES1)
+
+# The shortest amount of time and the least number of chages made to the exercise are both zero, which is unacceptable. The other concern is that some respondents spent excessive amounts of time to complete the design space and their responses may not be truly reflective. Respondents are filtered out if more than 20 minutes was taken to complete the exercise. The average time spent to complete the exercise was 3 minutes. Additionally, there is concern that respondents did not spend an adequate amount of time to fully understand the exercise. The removal of respondents is based off of the distribution of responses, those outside of 3 standard distributions of the data are considered to be outliers and are excluded from the analysis. A sensitivity analysis may be completed to compare the truncated dataset and the affect on the results, against all non-zero time and change values (i.e., any respondents who did not complete the design space are not included).
+
+#Remove respondents that spent 0 seconds on the design space
+df.Clean <- df %>% filter(TIME1 != 0)
+
+#Calculate time mean and std dev for z-scores
+df.Clean$time_sd <- sd(df.Clean$TIME1)*sqrt((length(df.Clean$TIME1)-1)/(length(df.Clean$TIME1)))
+df.Clean$time_mean <- mean(df.Clean$TIME1)
+df.Clean$Z_Score <- (df.Clean$TIME1 - df.Clean$time_mean) / df.Clean$time_sd
+range(df.Clean$Z_Score) # Range of z-scores.
+
+#Remove Time values less than -3 and greater than +3 steps from the mean
+df.Clean <- df.Clean %>% filter(Z_Score >= -3 & Z_Score <= 3)
+
+#Respondents were allowed, and encouraged, to make as many changes (moving the slider bars to different values) as they felt necessary to understand the different options available to them. Based off of the random geneation pattern, it is plausible that an individual could have been initialized with a vehicle combination they were content with (e.g., ICE-configuration with low purchase and operating cost) and as such respondents at minimum needed to only move the slider bar once to be able to continue. Respondents who made zero changes are removed.
+
+df.Clean <- df.Clean %>% filter(CHANGES1 != 0)
+
+VDS <- df.Clean
+rm(df, df.Clean)
+```
+
+```{r Build Dataframe for Model Est., echo=FALSE, warning=FALSE}
+# Select and reorder the columns in the data frame to prepare them to be transformed for the mlogit model. Fields are ordered by the different choices provided to respondents for the purchase and operating cost. Two of the field names are changed to be in the appropriate format for the 'varying' function to identify them correctly.
+# This function lives here as the reordered datatable feeds into the two following boxplots.
+df2 <- VDS[,c(1:114, 117, 120, 123, 126, 129, 115, 116, 118, 119, 121, 122, 124, 125, 127, 128, 130:ncol(VDS))]
+colnames(df2)[114] <- "oc.hev"
+colnames(df2)[107] <- "pp.hev"
+df2$Incentive <- df2$INCENT1
+df2$Age <- df2$AGE1
+model_base <- df2
+Behaviour <- mlogit.data(df2, shape = "wide", choice = "depvar", varying = c(106:119)) # Change the shape of the dataframe from wide, to a long format so that the mlogit function can read the data and estimate the models.
+```
+
+##Initial Outcomes
+The purchase price and operating cost of vehicles, in addition to the percentage of vehicles designed by powertrain designation, is reviewed in Table\ref{tab:prop}. Of particular interest is the popularity of the long-electric range plug-in hybrid electric powertrain, with 53.65% of respondents _designing_ this option. The ICE and PHEV short-electric round out the top three selections, with the remaining powertrains accounting for only 15% of designs. Predicted to be of great influence is how the operating cost was presented to respondents; rather than in ambigous terms of per-so-many-kilometres, a clear cut monthly dollar value was defined. The PHEV long-electric is not the cheapest vehicle to purchase, and is actually considerably more expensive than the most of the other powertrain combinations. This is a curious result which will require further validation and testing. Of concerns noted, is that for respondents who were fatigued at this stage of the data collection (the VDS was towards the end), only moving the sliders once or twice may have been enough for them and were not interested in vesting the time to generate a more reflective response. Further data cleaning could be enacted to review this phenomena, which further consideration of the time spent and changes made variables. The variance in vehicle purchase price by body type and powertrain is shown in Figure \ref{fig-boxplotPP} and the variance in purchase price by powertrain, incentive, and vehicle age is shown in Figure \ref{fig-boxplot-PP-InctAge}. The boxplots clearly demonstrate that vehicle purchase price decreases for new vehicles with the incentive levels, but notably incentives do not impact the value of used vehicles. Rather, the purchase prices fall due to depreciation. The VDS took into active consideration the relative cost of different vehicle body types and has integrated these variances into the experiment, as presented. 
+
+Exploring the data of the boxplots more with more depth, we look at Table \ref{tab:prop2} for the breakdown by incentive, age, and powertrain. A surprisingly result is how marginal the variations between incentive groups are in the proportion of vehicles designed. While this table does not break out the results to include the seven body types, there is virtually no meaningful change as a result of increasing incentives, seeing less than a .4% change for the fully electric BEVs and less than 1% for the PHEVs at the maximum $14 000 incentive level.
+
+To further evaluate and analyze the data, a number of discrete choice analysis (see \ref{Train2014}) models are explored.
+
+```{r fig-boxplotPP, echo=FALSE, fig.align='center', fig.cap="\\label{fig-boxplotPP}Purchase Cost Variance by Body Type", out.width="100%"}
+bp.pp <- ggplot(df2, aes(depvar, CASH_PP1)) + geom_boxplot() + labs(x="Powertrain", y= "Purchase Price ($)", title = "Purchase Cost of Vehicles by Powertrain and Body Type")
+bp.pp <- bp.pp + facet_wrap(~BODY_TYPE)
+bp.pp
+```
+
+```{r fig-boxplot-PP-InctAge, echo=FALSE, fig.align='center', fig.cap="\\label{fig-boxplot-PP-InctAge}Purchase Cost Variance by Powertrain, Incentives, and Vehicle Age", out.width="100%"}
+df2$depvar <- factor(df2$depvar, labels = c("BL", "BS", "I", "H", "PLE", "PLG", "PSE"))
+bp.oc <- ggplot(df2, aes(x = depvar, y=CASH_PP1)) + geom_boxplot() + labs(x="Powertrain", y= "Purchase Cost ($)", caption = "Incentive in $s, Age in Years", title = "Purchase Cost of Vehicles by Powertrain, Incentive, and Vehicle Age")
+bp.oc <- bp.oc + facet_grid(Age~Incentive, labeller = label_both)
+bp.oc
+```
+
+```{r prop, echo=FALSE, fig.cap= "\\{tab:prop} Purchase Price, Operating Cost, and Proprotion of Vehicles Designed"}
+Proportion <- VDS %>% mutate(depvar = factor(depvar, 
+                                levels = c("ice", "hev", "phevse", "phevle", "phevlg", "bevs", "bevl" ), labels = c("1","2","3","4", "5", "6", "7"))) %>%
+  group_by(depvar) %>%
+  summarise(no_rows =length(depvar))
+
+df <- data.frame(Powertrain = c("ICE", "HEV", "PHEV SE", "PHEV LE", "PHEV LG", "BEV SE", "BEV LE"),
+                 "$Mean Purchase Price$" = c(mean(VDS$pp.ice), mean(VDS$pp.iceh), mean(VDS$pp.phevse), mean(VDS$pp.phevle), mean(VDS$pp.phevlg), mean(VDS$pp.bevs), mean(VDS$pp.bevl)),
+                 "Median Purchase Price" = c(median(VDS$pp.ice), median(VDS$pp.iceh), median(VDS$pp.phevse), median(VDS$pp.phevle), median(VDS$pp.phevlg), median(VDS$pp.bevs), median(VDS$pp.bevl)),
+                 "Mean Operating Cost" = c(mean(VDS$oc.ice), mean(VDS$oc.ice_hybrid), mean(VDS$oc.phevse), mean(VDS$oc.phevle), mean(VDS$oc.phevlg), mean(VDS$oc.bevs), mean(VDS$oc.bevl)),
+                 "Median Operating Cost" = c(median(VDS$oc.ice), median(VDS$oc.ice_hybrid), median(VDS$oc.phevse), median(VDS$oc.phevle), median(VDS$oc.phevlg), median(VDS$oc.bevs), median(VDS$oc.bevl)),
+                 Proportion = (Proportion$no_rows/16758)*100
+                 )
+df %>%
+  kable(
+    digits = 2,
+    col.names = c("", "Mean", "Median", "Mean", "Median", "As Selected"),
+    align = "c",
+    booktabs = TRUE,
+    caption = "Purchase Price, Operating Cost, and Proprotion of Vehicles Designed"
+  ) %>%
+pack_rows("Gasoline Only", 1, 2) %>%
+  pack_rows("Gasoline & Electricity", 3, 5) %>%
+  pack_rows("Electricity Only", 6, 7) %>%
+
+  add_header_above(c("Vehicle Powertrain" = 1, 
+                     "Purchase Price˜ ($)" = 2, 
+                     "Operating Cost* ($)" = 2, 
+                     "Proportion (%)" = 1),
+                   escape = TRUE) %>%
+  
+  footnote(c(paste("˜ Approximate cost to purchase a class-represntative vehicle, inclusive of tax"),
+             paste("* Approximate cost to operate (drive) a class-representative vehicle for 1,000km"))) %>%
+  kable_styling()
+```
+
+```{r prop2, echo=FALSE, warning=FALSE, fig.cap= "\\{tab:prop2} Mean Purchase Price of Vehicle by Powertrain, Incentive, and Vehicle Age"}
+Proportion2 <- VDS %>% mutate(depvar = factor(depvar, 
+                                levels = c("ice", "hev", "phevse", "phevle", "phevlg", "bevs", "bevl" ), labels = c("1","2","3","4", "5", "6", "7"))) %>%
+  group_by(INCENT1,depvar) %>%
+  summarise(no_rows =length(depvar))
+
+prop2 <- data.frame(
+                 "Powertrain" = c(rep(c(Powertrain = c("ICE", "HEV", "PHEV SE", "PHEV LE", "PHEV LG", "BEV SE", "BEV LE")) )),
+                 
+                 "New Vehicle" = c(mean(VDS$pp.ice[VDS$INCENT1==0 & VDS$AGE1==0]), mean(VDS$pp.iceh[VDS$INCENT1==0& VDS$AGE1==0]), mean(VDS$pp.phevse[VDS$INCENT1==0& VDS$AGE1==0]), mean(VDS$pp.phevle[VDS$INCENT1==0& VDS$AGE1==0]), mean(VDS$pp.phevlg[VDS$INCENT1==0& VDS$AGE1==0]), mean(VDS$pp.bevs[VDS$INCENT1==0& VDS$AGE1==0]), mean(VDS$pp.bevl[VDS$INCENT1==0& VDS$AGE1==0]),
+                                   mean(VDS$pp.ice[VDS$INCENT1==7000& VDS$AGE1==0]), mean(VDS$pp.iceh[VDS$INCENT1==7000& VDS$AGE1==0]), mean(VDS$pp.phevse[VDS$INCENT1==7000& VDS$AGE1==0]), mean(VDS$pp.phevle[VDS$INCENT1==7000& VDS$AGE1==0]), mean(VDS$pp.phevlg[VDS$INCENT1==7000& VDS$AGE1==0]), mean(VDS$pp.bevs[VDS$INCENT1==7000& VDS$AGE1==0]), mean(VDS$pp.bevl[VDS$INCENT1==7000& VDS$AGE1==0]),mean(VDS$pp.ice[VDS$INCENT1==14000& VDS$AGE1==0]), mean(VDS$pp.iceh[VDS$INCENT1==14000& VDS$AGE1==0]), mean(VDS$pp.phevse[VDS$INCENT1==14000& VDS$AGE1==0]), mean(VDS$pp.phevle[VDS$INCENT1==14000& VDS$AGE1==0]), mean(VDS$pp.phevlg[14000& VDS$AGE1==0]), mean(VDS$pp.bevs[VDS$INCENT1==14000& VDS$AGE1==0]), mean(VDS$pp.bevl[VDS$INCENT1==14000& VDS$AGE1==0])),
+                 "2 Year Old Vehicle" = c(mean(VDS$pp.ice[VDS$INCENT1==0 & VDS$AGE1==2]), mean(VDS$pp.iceh[VDS$INCENT1==0& VDS$AGE1==2]), mean(VDS$pp.phevse[VDS$INCENT1==0& VDS$AGE1==2]), mean(VDS$pp.phevle[VDS$INCENT1==0& VDS$AGE1==2]), mean(VDS$pp.phevlg[VDS$INCENT1==0& VDS$AGE1==2]), mean(VDS$pp.bevs[VDS$INCENT1==0& VDS$AGE1==2]), mean(VDS$pp.bevl[VDS$INCENT1==0& VDS$AGE1==2]),mean(VDS$pp.ice[VDS$INCENT1==7000& VDS$AGE1==2]), mean(VDS$pp.iceh[VDS$INCENT1==7000& VDS$AGE1==2]), mean(VDS$pp.phevse[VDS$INCENT1==7000& VDS$AGE1==2]), mean(VDS$pp.phevle[VDS$INCENT1==7000& VDS$AGE1==2]), mean(VDS$pp.phevlg[VDS$INCENT1==7000& VDS$AGE1==2]), mean(VDS$pp.bevs[VDS$INCENT1==7000& VDS$AGE1==2]), mean(VDS$pp.bevl[VDS$INCENT1==7000& VDS$AGE1==2]),mean(VDS$pp.ice[VDS$INCENT1==14000& VDS$AGE1==2]), mean(VDS$pp.iceh[VDS$INCENT1==14000& VDS$AGE1==2]), mean(VDS$pp.phevse[VDS$INCENT1==14000& VDS$AGE1==2]), mean(VDS$pp.phevle[VDS$INCENT1==14000& VDS$AGE1==2]), mean(VDS$pp.phevlg[14000& VDS$AGE1==2]), mean(VDS$pp.bevs[VDS$INCENT1==14000& VDS$AGE1==2]), mean(VDS$pp.bevl[VDS$INCENT1==14000& VDS$AGE1==2])),
+                 "5 Year Old Vehicle" = c(mean(VDS$pp.ice[VDS$INCENT1==0 & VDS$AGE1==5]), mean(VDS$pp.iceh[VDS$INCENT1==0& VDS$AGE1==5]), mean(VDS$pp.phevse[VDS$INCENT1==0& VDS$AGE1==5]), mean(VDS$pp.phevle[VDS$INCENT1==0& VDS$AGE1==5]), mean(VDS$pp.phevlg[VDS$INCENT1==0& VDS$AGE1==5]), mean(VDS$pp.bevs[VDS$INCENT1==0& VDS$AGE1==5]), mean(VDS$pp.bevl[VDS$INCENT1==0& VDS$AGE1==5]),mean(VDS$pp.ice[VDS$INCENT1==7000& VDS$AGE1==5]), mean(VDS$pp.iceh[VDS$INCENT1==7000& VDS$AGE1==5]), mean(VDS$pp.phevse[VDS$INCENT1==7000& VDS$AGE1==5]), mean(VDS$pp.phevle[VDS$INCENT1==7000& VDS$AGE1==5]), mean(VDS$pp.phevlg[VDS$INCENT1==7000& VDS$AGE1==5]), mean(VDS$pp.bevs[VDS$INCENT1==7000& VDS$AGE1==5]), mean(VDS$pp.bevl[VDS$INCENT1==7000& VDS$AGE1==5]),mean(VDS$pp.ice[VDS$INCENT1==14000& VDS$AGE1==5]), mean(VDS$pp.iceh[VDS$INCENT1==14000& VDS$AGE1==5]), mean(VDS$pp.phevse[VDS$INCENT1==14000& VDS$AGE1==5]), mean(VDS$pp.phevle[VDS$INCENT1==14000& VDS$AGE1==5]), mean(VDS$pp.phevlg[14000& VDS$AGE1==5]), mean(VDS$pp.bevs[VDS$INCENT1==14000& VDS$AGE1==5]), mean(VDS$pp.bevl[VDS$INCENT1==14000& VDS$AGE1==5])),
+                 Proportion = (Proportion2$no_rows/16758)*100)
+
+kable(prop2, 
+      align = "c",
+      digits = 2,
+      booktabs = TRUE,
+      col.names = c("Powertrain", "New Vehicle", "2 Year Old Vehicle", "5 Year Old Vehicle", "As Selected"),
+      caption = "Mean Purchase Price of Vehicle by Powertrain, Incentive, and Vehicle Age"
+      ) %>%
+  pack_rows("$0 Incentive", 1, 7) %>%
+  pack_rows("$7 000 Incentive", 8, 14) %>%
+  pack_rows("$14 000 Incentive", 15, 21) %>%
+  add_header_above(c(" " = 1, 
+                     "Average Purchase Price ($)" = 3, 
+                     "Proportion (%)" = 1),
+                   escape = TRUE) %>%
+  kable_styling(latex_options = c("scale_down")) 
+ 
+```
+
+##Estimating an Initial Model
+
+First, a multinomial logit model will be estimated. The initial model is estimated as $depvar = \beta + pp + oc$. More appropriately, the utility function is defined as: $$
+\begin{array}{ccc}
+V_{\text{bs}} = & \beta_{bs} & + \beta_1\text{pp.bs} + \beta_2\text{oc.bs}\\
+V_{\text{bl}} = & \beta_{bl} & + \beta_1\text{pp.bl} + \beta_2\text{oc.bl}\\
+V_{\text{ih}} = & \beta_{he} & + \beta_1\text{pp.he} + \beta_2\text{oc.he}\\
+V_{\text{pl}} = & \beta_{pl} & + \beta_1\text{pp.pl} + \beta_2\text{oc.pl}\\
+V_{\text{pg}} = & \beta_{pg} & + \beta_1\text{pp.pg} + \beta_2\text{oc.pg}\\
+V_{\text{ps}} = & \beta_{ps} & + \beta_1\text{pp.ps} + \beta_2\text{oc.ps}\\
+V_{\text{ice}} = & 0 & + \beta_1\text{pp.ice} + \beta_2\text{oc.ice}\\
+\end{array}
+$$ 
+Simply the dependent variable, the powertrain selection, is estimated to be a function of the purchase price and the operating cost. The model output confirms (albeit from a derived dataset), the alternatives (i.e., powertrains) frequencies. From the initial model results, we find that both our purchase price and operating cost are significant to at least 0.01
+
+```{r eval=FALSE, include=FALSE}
+#Questions
+
+#What are the questions that we are looking to answer?
+
+#  Using the techniques from the course, provide a summary overview of the data
+#  Determine the 
+#  Estimate the marginal effects and elasticities
+#    Do this with nesting
+#  Estimate the probabilities
+#  Estimate the willingness to pay
+#  Estimate the impact of a new choice (e.g. fuel cell or longer range gasoline vehicles)
+#  Compare proportional and non-proportional substitution patterns
+  
+#Does it make sense to break the data out and run seperate analyses?
+#  E.g., by bodytype, incentive level, home charging access
+```
+
+
+```{r MNL Logit Model #1, echo=FALSE, message=FALSE, warning=FALSE}
+mod1 <- mlogit(depvar ~  pp, Behaviour, reflevel = "ice")
+summary(mod1)
+
+mixl_t.summary <- rownames_to_column(data.frame(summary(mod1)$CoefTable), "Variable") %>%
+  transmute(Variable, Estimate, pval = `Pr...z..`)
+```
+
+The coefficients of a discrete choice model are informative because they modulate the effect of various variables on the probabilities of selecting alternatives. In addition, they also can be used to understand how decision-makers trade-off different attributes.
+
+The first thing to note is the sign of the coefficients. In the case of the  multinomial logit model, the signs of the coefficients are informative because they tell us something about how the utility is affected by an attribute (either of the alternatives or the decision-maker). A positive sign indicates that the utility increases as the attribute increases. For instance, when considering mobile phones, we would expect speed to increase the utility of the alternatives. On the other hand, we would expect the price of the mobile phones to decrease their utility: the higher the cost, the lower the utility derived from an alternative. In this case, the expected sign of the coefficient for price would be negative.
+
+Inspecting the results of Model 0, we notice that the sign of the coefficient for installation costs is negative; this implies that the utility of a system tends to decrease as the installation cost increases. Not surprisingly, since central gas systems have the lowest installation costs, they are also the most popular, whereas heat pumps, with the highest installation costs, are the least popular.
+
+Alas, beyond this qualitative assessment of the signs of the coefficients, their magnitudes are not directly interpretable.
+
+> "How much are consumers willing to pay in increased installation costs for lower annual operating costs?"
+
+To answer this question, we first need an appropriate choice model, that is, one that includes both installation _and_ annual operation costs. The following utility functions are one possible model specification (with heat pump as the reference level):
+$$
+\begin{array}{ccc}
+V_{\text{bs}} = & \beta_{bs} & + \beta_1\text{pp.bs} + \beta_2\text{oc.bs}\\
+V_{\text{bl}} = & \beta_{bl} & + \beta_1\text{pp.bl} + \beta_2\text{oc.bl}\\
+V_{\text{ih}} = & \beta_{he} & + \beta_1\text{pp.he} + \beta_2\text{oc.he}\\
+V_{\text{pl}} = & \beta_{pl} & + \beta_1\text{pp.pl} + \beta_2\text{oc.pl}\\
+V_{\text{pg}} = & \beta_{pg} & + \beta_1\text{pp.pg} + \beta_2\text{oc.pg}\\
+V_{\text{ps}} = & \beta_{ps} & + \beta_1\text{pp.ps} + \beta_2\text{oc.ps}\\
+V_{\text{ice}} = & 0 & + \beta_1\text{pp.ice} + \beta_2\text{oc.ice}\\
+\end{array}
+$$
+
+The model can be estimated using these constants.
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+mod1 <- mlogit(depvar ~  pp + oc | INCENT1 + BODY_TYPE, Behaviour, reflevel = "ice")
+summary(mod1)
+```
+
+So, how is this model used to understand consumer preferences? Recall that the question is at what rate are consumers willing to pay for installation relative to operation.
+
+The coefficients of the model provide useful information. Suppose that we would like to know at what rate consumers would be willing to trade one aspect of the good for another, whithout compromising the utility they derive from it. In effect we would like to know how changes in one attribute relate to changes in the other. In the present case, we want to know how installation costs change with respect to operation costs, while mainting the utility (i.e., the change in utility is zero):
+
+$$
+\partial U = 0 = \beta_1\partial ic + \beta_{2}\partial oc
+$$
+
+It follows then that:
+
+$$
+-\frac{\partial ic}{\partial oc} = \frac{\beta_2}{\beta_1}
+$$
+
+The ratio of the coefficients represents the _willingness to pay_. In this example, since:
+
+$$
+-\frac{\partial ic}{\partial oc} = \frac{\beta_2}{\beta_1} = \frac{-0.0069}{-0.0015} = 4.56
+$$
+
+The willingness to pay is an additional 4.56 dollars in installation costs per every dollar of operation cost per year. The discount rate is:
+
+$$
+r = \frac{1}{4.56} = 0.219 = 21.9\%
+$$
+
+This information can be used to assess the behavior of consumers.
+
+## Evaluating market changes
+
+To the extent that random utility models can capture consumer preferences, they are useful to understand patterns of substitution. Once a model has been estimated simulating market changes involves creating a new data matrix to which the model can be applied.
+
+
+
+<!-- Before estimating an initial model, we need to define the utility functions that we wish to estimate. Since there are seven alternatives, we define the following seven functions (with ice as the reference level): -->
+
+#### Utility Model
+
+
+
+###Proportional Odds Logistic Regression
+
+While the aforementioned has been an interesting thought exercise, there are various steps that because of the survey and/or data structure, which are problematic or otherwise nonsensical. Since the aspects of vehicle age, gasoline range, and electric range are ordered questions, in which the utility between the responses is related, a factor-based ordinal response analysis is evaluated using a proportional odds logistic regression.
+
+```{r eval=FALSE, include=FALSE}
+polr_mod1 <- model_base %>% mutate(
+                    AGE1 = factor(AGE1,
+                                  levels = c("0", "2", "5")),
+                    GRANGE1 = factor(GRANGE1, 
+                                       levels = c("0", "500-700", "1,000+")),
+                    ERANGE1 = factor(ERANGE1, 
+                                       levels = c("0", "40-50", "85-100", "210-250", "300-350", "340-400", "425-500")),
+                    depvar = factor(depvar,
+                                    levels = c("ice", "hev", "phevse", "phevle", "phevlg", "bevs", "bevl")),
+                    INCENT1 = factor(INCENT1, 
+                                     levels = c("0" ,"7000", "14000"), labels = c("Zero","Low","High")),
+                    PUB_EXP1 = factor(PUB_EXP1,
+                                      levels = c("1", "2")),
+                    C5New = factor(C5New,
+                                   levels = c("1", "2", "3", "4", "5")),
+                    C6New = factor(C6new,
+                                   levels = c("1", "2", "3", "4", "5")),
+                    Q9ar1c1 = factor(Q9ar1c1,
+                                     levels = c("0", "1", "2", "3", "4")))
+                    
+```
+
+```{r eval=FALSE, include=FALSE}
+f_polr_mod1 <- formula(depvar ~ PUB_EXP1 + S1 + Qb + Qd + INCENT1)
+f_polr_mod_depvar <- polr(f_polr_mod1, data = polr_mod1) 
+summary(f_polr_mod_depvar)
+```
+
+Results
+=======
+
+Discussion and Relevance to Literature
+======================================
+
+###Future Research
+An interesting analysis would be to a random sampling of the survey dataset and build a model to estimate the impacts of incentives abd the marginal effects relationship between purchase price and operating cost, comparing those results with the full collected data set of stated choice.
+
+Conclusions
+===========
+
+Acknowledgements
+================
+
+This study is a part of a research project funded by Social Sciences and Humanities Research Council of Canada (SSHRC) Grant No: 886-2013-0001. The views expressed in this study are those of the authors and do not necessarily reflect the funding authority.
+
+Appendix
+========
+
+##Purchase Price and Operating Cost Calculations
+
+Purchase price (pp) is determined by the bodytype (Economy, Intermediate, Sedan, Luxury Sedan, SUV, Minivan, Pickup) and the powertrain (i.e., technology type: ICE; Hybrid; PHEV - Short Electric, Long Electric, Long Gas; and, BEV: Short Range, Long Range).
+  ICE and Hybrid are the cheapest options, respectively, across all bodytypes.
+  pp is affected by three age levels: New, 2, and 5 years old. New = approximate MSRP value of the powertrain + bodytype configuration; 2 = 65% retained value; and, 5 years = 35% of retained value. 
+  pp is affected by three incentive levels: $0, $7000, and $14000. Offered only to new vehicles of the powertrains: Phevse, Phevle, Phevlg, bevs, bevl.
+  
+Operating Cost (oc) is determined by the bodytype-powertrain combination, the cost of electricity, and the cost of gasoline (87 Octane / regular).
+  Electricity rates are determined by whether respondents have access to home charging or not. Those with access paid 13 cents / kWh, those without paid 26 cents / kWh to approximate the cost of needing to use public / 3rd party charging systems.
+  Cost of gasoline was determined by the January 2018 average cost of gasoline across Canada's top 20 municipalities, as per reporting by Statistics Canada (Gas = $1.17 per litre). This value does not vary across alternatives.
+  oc is calculated as a function of the average cost to travel 1000km in a series of reference vehicles, from full tank to empty on average combined fuel economy. This per 1000km value is then multiplied by the midpoint of the ranges of stated annual kilometres travelled by the respondent (e.g., 5000-10000km = 7500km), in an attempt to approximate the actual cost to operate that specific respondent may incur. A seperate sheet is available without the per-respondent cost calculation.
+  
+References {#references .unnumbered}
+==========

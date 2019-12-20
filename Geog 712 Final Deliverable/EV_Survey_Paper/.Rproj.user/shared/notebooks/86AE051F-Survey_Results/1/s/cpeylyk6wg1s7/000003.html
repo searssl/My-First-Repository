@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<script src="lib/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+
+</head>
+<body style="background-color:white;">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>Mean Purchase Price of Vehicle by Powertrain, Incentive, and Vehicle Age</caption>
+ <thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1"></th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Average Purchase Price ($)</div></th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Proportion (%)</div></th>
+</tr>
+  <tr>
+   <th style="text-align:center;"> Powertrain </th>
+   <th style="text-align:center;"> New Vehicle </th>
+   <th style="text-align:center;"> 2 Year Old Vehicle </th>
+   <th style="text-align:center;"> 5 Year Old Vehicle </th>
+   <th style="text-align:center;"> As Selected </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr grouplength="7"><td colspan="5" style="border-bottom: 1px solid;"><strong>$0 Incentive</strong></td></tr>
+<tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> ICE </td>
+   <td style="text-align:center;"> 35930.25 </td>
+   <td style="text-align:center;"> 21052.50 </td>
+   <td style="text-align:center;"> 12236.01 </td>
+   <td style="text-align:center;"> 6.73 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> HEV </td>
+   <td style="text-align:center;"> 48626.75 </td>
+   <td style="text-align:center;"> 38038.00 </td>
+   <td style="text-align:center;"> 27395.80 </td>
+   <td style="text-align:center;"> 1.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV SE </td>
+   <td style="text-align:center;"> 39118.97 </td>
+   <td style="text-align:center;"> 39688.13 </td>
+   <td style="text-align:center;"> 37737.69 </td>
+   <td style="text-align:center;"> 4.47 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV LE </td>
+   <td style="text-align:center;"> 47478.40 </td>
+   <td style="text-align:center;"> 43207.25 </td>
+   <td style="text-align:center;"> 31437.84 </td>
+   <td style="text-align:center;"> 17.51 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV LG </td>
+   <td style="text-align:center;"> 29966.67 </td>
+   <td style="text-align:center;"> 31832.85 </td>
+   <td style="text-align:center;"> 39836.52 </td>
+   <td style="text-align:center;"> 0.79 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> BEV SE </td>
+   <td style="text-align:center;"> 27343.83 </td>
+   <td style="text-align:center;"> 39472.29 </td>
+   <td style="text-align:center;"> 34484.52 </td>
+   <td style="text-align:center;"> 1.74 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> BEV LE </td>
+   <td style="text-align:center;"> 24239.20 </td>
+   <td style="text-align:center;"> 30076.62 </td>
+   <td style="text-align:center;"> 37246.88 </td>
+   <td style="text-align:center;"> 1.21 </td>
+  </tr>
+  <tr grouplength="7"><td colspan="5" style="border-bottom: 1px solid;"><strong>$7 000 Incentive</strong></td></tr>
+<tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> ICE </td>
+   <td style="text-align:center;"> 36112.58 </td>
+   <td style="text-align:center;"> 20883.05 </td>
+   <td style="text-align:center;"> 12280.12 </td>
+   <td style="text-align:center;"> 5.87 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> HEV </td>
+   <td style="text-align:center;"> 50695.07 </td>
+   <td style="text-align:center;"> 38032.88 </td>
+   <td style="text-align:center;"> 27143.62 </td>
+   <td style="text-align:center;"> 0.92 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV SE </td>
+   <td style="text-align:center;"> 32464.60 </td>
+   <td style="text-align:center;"> 32476.54 </td>
+   <td style="text-align:center;"> 30405.86 </td>
+   <td style="text-align:center;"> 4.46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV LE </td>
+   <td style="text-align:center;"> 43317.27 </td>
+   <td style="text-align:center;"> 39128.35 </td>
+   <td style="text-align:center;"> 36987.74 </td>
+   <td style="text-align:center;"> 17.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV LG </td>
+   <td style="text-align:center;"> 39102.64 </td>
+   <td style="text-align:center;"> 39025.98 </td>
+   <td style="text-align:center;"> 34280.83 </td>
+   <td style="text-align:center;"> 0.87 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> BEV SE </td>
+   <td style="text-align:center;"> 40009.38 </td>
+   <td style="text-align:center;"> 31832.16 </td>
+   <td style="text-align:center;"> 33172.03 </td>
+   <td style="text-align:center;"> 1.86 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> BEV LE </td>
+   <td style="text-align:center;"> 28266.41 </td>
+   <td style="text-align:center;"> 34166.15 </td>
+   <td style="text-align:center;"> 34468.11 </td>
+   <td style="text-align:center;"> 1.20 </td>
+  </tr>
+  <tr grouplength="7"><td colspan="5" style="border-bottom: 1px solid;"><strong>$14 000 Incentive</strong></td></tr>
+<tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> ICE </td>
+   <td style="text-align:center;"> 35954.55 </td>
+   <td style="text-align:center;"> 21141.04 </td>
+   <td style="text-align:center;"> 12055.25 </td>
+   <td style="text-align:center;"> 5.61 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> HEV </td>
+   <td style="text-align:center;"> 50168.36 </td>
+   <td style="text-align:center;"> 38034.24 </td>
+   <td style="text-align:center;"> 26888.45 </td>
+   <td style="text-align:center;"> 0.86 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV SE </td>
+   <td style="text-align:center;"> 30856.02 </td>
+   <td style="text-align:center;"> 39827.62 </td>
+   <td style="text-align:center;"> 46632.97 </td>
+   <td style="text-align:center;"> 4.06 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV LE </td>
+   <td style="text-align:center;"> 33208.34 </td>
+   <td style="text-align:center;"> 38773.15 </td>
+   <td style="text-align:center;"> 34874.95 </td>
+   <td style="text-align:center;"> 18.43 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> PHEV LG </td>
+   <td style="text-align:center;"> 34068.44 </td>
+   <td style="text-align:center;"> 33121.63 </td>
+   <td style="text-align:center;"> 37770.84 </td>
+   <td style="text-align:center;"> 0.97 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> BEV SE </td>
+   <td style="text-align:center;"> 23492.37 </td>
+   <td style="text-align:center;"> 34608.95 </td>
+   <td style="text-align:center;"> 27400.65 </td>
+   <td style="text-align:center;"> 2.14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center; padding-left: 2em;" indentlevel="1"> BEV LE </td>
+   <td style="text-align:center;"> 30603.00 </td>
+   <td style="text-align:center;"> 36044.98 </td>
+   <td style="text-align:center;"> 28650.61 </td>
+   <td style="text-align:center;"> 1.60 </td>
+  </tr>
+</tbody>
+</table>
+</body>
+</html>

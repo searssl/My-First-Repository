@@ -1,0 +1,4 @@
+"0","df2$depvar <- factor(df2$depvar, labels = c(""BL"", ""BS"", ""I"", ""H"", ""PLE"", ""PLG"", ""PSE""))"
+"0","bp.oc <- ggplot(df2, aes(x = depvar, y=CASH_PP1)) + geom_boxplot() + labs(x=""Powertrain"", y= ""Purchase Cost ($)"", caption = ""Incentive in $s, Age in Years"", title = ""Purchase Cost of Vehicles by Powertrain, Incentive, and Vehicle Age"")"
+"0","bp.oc <- bp.oc + facet_grid(Age~Incentive, labeller = label_both)"
+"0","bp.oc"

@@ -1,0 +1,7 @@
+"0","library(tidyverse)"
+"0","library(evd)"
+"0","library(mlogit)"
+"0","library(kableExtra)"
+"0","library(knitr)"
+"0","library(VDS)"
+"0","library(MASS)"
